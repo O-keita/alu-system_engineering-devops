@@ -20,7 +20,7 @@ sudo chmod -R 755 /var/www
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
 # Creating new index
-echo -e "Holberton School" | dd status=none of=/var/www/html/index.nginx-debian.html
+echo -e "Holberton School for the win!" | dd status=none of=/var/www/html/index.nginx-debian.html
 
 # Restarting nginx
-sudo service nginx restart
+sudo service nginx restart  
