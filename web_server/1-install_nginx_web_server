@@ -1,26 +1,15 @@
 #!/usr/bin/env bash
-#Intsalling N-gin-x
+#Installing Nginx on Ubuntu
+#Nginx is listening on port 80
+#The GET request should return a page containing "Holberton School"
 
-#update and Install
+sudo apt-get update && upgrade
+sudo apt-get install nginx -y
 
-sudo apt update
-sudo apt install nginx
-
-#start the Nginx service:
-sudo service nginx start
-
-# allowing nginx on firewall
-sudo ufw allow 'Nginx HTTP'
-
-# Give the user ownership to website files for easy editing
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-
-# Backup default index
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
-
-# Creating new index
-echo -e "Holberton School for the win!" | dd status=none of=/var/www/html/index.nginx-debian.html
-
-# Restarting nginx
-sudo service nginx restart  
+#Create a directory called html inside your nginx server
+sudo mkdir /var/www/html
+#Create a file inside that directory called index.html
+sudo touch /var/www/html/index.html
+#Display your message then
+sudo echo "Holberton School" > /var/www/html/index.html
+sudo service nginx restart
