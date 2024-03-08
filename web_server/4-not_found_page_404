@@ -1,35 +1,25 @@
 #!/usr/bin/env bash
-# script that install nginx and configure it to redirect to another page when
-# accessing the /redirect_me page.
-sudo apt update -y
-sudo apt install nginx -y
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
+# Serve a page that would return a Hello World string
+#
 
-mkdir /etc/nginx/html
-touch /etc/nginx/html/index.html
-touch /etc/nginx/html/404.html
-echo "Holberton School" > /etc/nginx/html/index.html
-echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+	 sudo apt-get install nginx -y
 
-# store configuration content
-new_config=\
-"server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-               root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-        server_name _;
-        location / {
-                try_files \$uri \$uri/ =404;
-        }
-        location /redirect_me { 
-            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-        }
-	error_page 404 /404.html;
-	location /404 {
-	    root /etc/nginx/html;
-	    internal;
-        }
-}
-"
-echo "$new_config" > /etc/nginx/sites-available/default
-sudo service nginx restart 
+# starting nginx service
+sudo service nginx start
+
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+echo "Ceci n'est pas une page" > /var/www/html/error_404.html
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+
+# Restarting nginx
+sudo service nginx restart
+
