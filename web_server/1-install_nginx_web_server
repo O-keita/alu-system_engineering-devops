@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#Installing Nginx on Ubuntu
+#Installing Nginx on Ubuntugit puh
 #Nginx is listening on port 80
 #The GET request should return a page containing "Holberton School"
 
